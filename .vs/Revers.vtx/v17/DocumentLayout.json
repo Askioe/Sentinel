@@ -1,0 +1,123 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\cdecl\\source\\repos\\Revers.vtx\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6EFD8902-D372-489C-A9C1-BB58CFC0197C}|Revers.vtx.vcxproj|C:\\Users\\cdecl\\source\\repos\\Revers.vtx\\driver.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{6EFD8902-D372-489C-A9C1-BB58CFC0197C}|Revers.vtx.vcxproj|solutionrelative:driver.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6EFD8902-D372-489C-A9C1-BB58CFC0197C}|Revers.vtx.vcxproj|C:\\Users\\cdecl\\source\\repos\\Revers.vtx\\Common.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{6EFD8902-D372-489C-A9C1-BB58CFC0197C}|Revers.vtx.vcxproj|solutionrelative:Common.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6EFD8902-D372-489C-A9C1-BB58CFC0197C}|Revers.vtx.vcxproj|C:\\Users\\cdecl\\source\\repos\\Revers.vtx\\util.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{6EFD8902-D372-489C-A9C1-BB58CFC0197C}|Revers.vtx.vcxproj|solutionrelative:util.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6EFD8902-D372-489C-A9C1-BB58CFC0197C}|Revers.vtx.vcxproj|C:\\Users\\cdecl\\source\\repos\\Revers.vtx\\VMX\\Defines\\Vmx_ControlArea.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{6EFD8902-D372-489C-A9C1-BB58CFC0197C}|Revers.vtx.vcxproj|solutionrelative:VMX\\Defines\\Vmx_ControlArea.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6EFD8902-D372-489C-A9C1-BB58CFC0197C}|Revers.vtx.vcxproj|C:\\Users\\cdecl\\source\\repos\\Revers.vtx\\VMX\\Vmx.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{6EFD8902-D372-489C-A9C1-BB58CFC0197C}|Revers.vtx.vcxproj|solutionrelative:VMX\\Vmx.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6EFD8902-D372-489C-A9C1-BB58CFC0197C}|Revers.vtx.vcxproj|C:\\Users\\cdecl\\source\\repos\\Revers.vtx\\VMX\\Vmx.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{6EFD8902-D372-489C-A9C1-BB58CFC0197C}|Revers.vtx.vcxproj|solutionrelative:VMX\\Vmx.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Vmx.cpp",
+              "DocumentMoniker": "C:\\Users\\cdecl\\source\\repos\\Revers.vtx\\VMX\\Vmx.cpp",
+              "RelativeDocumentMoniker": "VMX\\Vmx.cpp",
+              "ToolTip": "C:\\Users\\cdecl\\source\\repos\\Revers.vtx\\VMX\\Vmx.cpp",
+              "RelativeToolTip": "VMX\\Vmx.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-23T07:12:10.918Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Vmx.h",
+              "DocumentMoniker": "C:\\Users\\cdecl\\source\\repos\\Revers.vtx\\VMX\\Vmx.h",
+              "RelativeDocumentMoniker": "VMX\\Vmx.h",
+              "ToolTip": "C:\\Users\\cdecl\\source\\repos\\Revers.vtx\\VMX\\Vmx.h",
+              "RelativeToolTip": "VMX\\Vmx.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-23T07:13:27.294Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Vmx_ControlArea.h",
+              "DocumentMoniker": "C:\\Users\\cdecl\\source\\repos\\Revers.vtx\\VMX\\Defines\\Vmx_ControlArea.h",
+              "RelativeDocumentMoniker": "VMX\\Defines\\Vmx_ControlArea.h",
+              "ToolTip": "C:\\Users\\cdecl\\source\\repos\\Revers.vtx\\VMX\\Defines\\Vmx_ControlArea.h",
+              "RelativeToolTip": "VMX\\Defines\\Vmx_ControlArea.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-23T07:19:35.012Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "util.h",
+              "DocumentMoniker": "C:\\Users\\cdecl\\source\\repos\\Revers.vtx\\util.h",
+              "RelativeDocumentMoniker": "util.h",
+              "ToolTip": "C:\\Users\\cdecl\\source\\repos\\Revers.vtx\\util.h",
+              "RelativeToolTip": "util.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-23T07:12:14.146Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Common.h",
+              "DocumentMoniker": "C:\\Users\\cdecl\\source\\repos\\Revers.vtx\\Common.h",
+              "RelativeDocumentMoniker": "Common.h",
+              "ToolTip": "C:\\Users\\cdecl\\source\\repos\\Revers.vtx\\Common.h",
+              "RelativeToolTip": "Common.h",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAIwAwAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-23T07:12:12.65Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "driver.cpp",
+              "DocumentMoniker": "C:\\Users\\cdecl\\source\\repos\\Revers.vtx\\driver.cpp",
+              "RelativeDocumentMoniker": "driver.cpp",
+              "ToolTip": "C:\\Users\\cdecl\\source\\repos\\Revers.vtx\\driver.cpp",
+              "RelativeToolTip": "driver.cpp",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABkAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-23T07:12:09.248Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
