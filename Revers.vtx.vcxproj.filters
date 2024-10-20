@@ -19,15 +19,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Inf Include="Revers.vtx.inf">
-      <Filter>Driver Files</Filter>
-    </Inf>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="driver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VMX\Vmx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VMX\Vmcs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VMX\vmexit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,23 +36,46 @@
     <ClInclude Include="util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VMX\Defines\Vmx_ControlArea.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VMX\Arc\ia32.h">
+    <ClInclude Include="VMX\Defines\VMX_ControlArea.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VMX\Arc\cr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VMX\Defines\Vmx_ProcessorData.h">
+    <ClInclude Include="VMX\Defines\VMX_Guest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common.h">
+    <ClInclude Include="Globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VMX\Vmx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="VMX\Arc\rflags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VMX\Arc\msr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VMX\Arc\dr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VMX\Vmcs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VMX\Defines\VMX_Intrin.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VMX\vmexit.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="VMX\VmmIntrin.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="VMX\VmxLaunch.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
   </ItemGroup>
 </Project>

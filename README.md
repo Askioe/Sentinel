@@ -1,4 +1,4 @@
-# Revers.vtx
+# Sentinel
 Type 2 Hypervisor.
 Currently in the process of refactoring the codebase, reimplementing and cleaning up the structures.
 

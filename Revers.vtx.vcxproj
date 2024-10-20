@@ -26,6 +26,7 @@
     <Configuration>Debug</Configuration>
     <Platform Condition="'$(Platform)' == ''">x64</Platform>
     <RootNamespace>Revers_vtx</RootNamespace>
+    <ProjectName>Sentinel</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -61,9 +62,7 @@
     <DriverTargetPlatform>Universal</DriverTargetPlatform>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
-  </ImportGroup>
+  <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -88,6 +87,7 @@
     <ClCompile>
       <TreatWarningAsError>false</TreatWarningAsError>
       <AdditionalIncludeDirectories>$(ProjectDir)Arc;$(ProjectDir)Defines;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
     </ClCompile>
     <Link>
       <EntryPointSymbol>DriverEntry</EntryPointSymbol>
@@ -109,26 +109,32 @@
     </DriverSign>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Inf Include="Revers.vtx.inf" />
-  </ItemGroup>
-  <ItemGroup>
     <FilesToPackage Include="$(TargetPath)" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="driver.cpp" />
+    <ClInclude Include="VMX\Defines\VMX_Intrin.h" />
+    <ClCompile Include="VMX\Vmcs.cpp" />
+    <ClCompile Include="VMX\vmexit.cpp" />
     <ClCompile Include="VMX\Vmx.cpp" />
+    <ClInclude Include="VMX\vmexit.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Common.h" />
+    <ClInclude Include="Globals.h" />
     <ClInclude Include="util.h" />
     <ClInclude Include="VMX\Arc\cr.h" />
-    <ClInclude Include="VMX\Arc\ia32.h" />
-    <ClInclude Include="VMX\Defines\Vmx_ControlArea.h" />
-    <ClInclude Include="VMX\Defines\Vmx_ProcessorData.h" />
+    <ClInclude Include="VMX\Arc\dr.h" />
+    <ClInclude Include="VMX\Arc\msr.h" />
+    <ClInclude Include="VMX\Arc\rflags.h" />
+    <ClInclude Include="VMX\Defines\VMX_ControlArea.h" />
+    <ClInclude Include="VMX\Defines\VMX_Guest.h" />
+    <ClInclude Include="VMX\Vmcs.h" />
     <ClInclude Include="VMX\Vmx.h" />
   </ItemGroup>
+  <ItemGroup>
+    <MASM Include="VMX\VmmIntrin.asm" />
+    <MASM Include="VMX\VmxLaunch.asm" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
-  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets" />
 </Project>
