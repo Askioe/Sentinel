@@ -1,6 +1,12 @@
 # Sentinel
-Type 2 Hypervisor.
+Type 2 Intel Hypervisor.
 Currently in the process of refactoring the codebase, reimplementing and cleaning up the structures.
+
+# TODO
+* Implement EPT
+* Implement VmExit Handles
+* Limit triggers for VmExits
+* Add Support for AMD
 
 # Resources
 * https://revers.engineering/7-days-to-virtualization-a-series-on-hypervisor-development/
