@@ -88,3 +88,18 @@ union __cr_fixed_t
 	} u;
 	long long all;
 };
+
+union __reset_control_register
+{
+	unsigned __int8 flags;
+	struct
+	{
+		unsigned __int8 reserved0 : 1;
+		unsigned __int8 system_reset : 1;
+		unsigned __int8 reset_cpu : 1;
+		unsigned __int8 full_reset : 1;
+		unsigned __int8 reserved1 : 4;
+	};
+};
+
+#define RST_CNT_IO_PORT 0xCF9

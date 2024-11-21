@@ -11,6 +11,13 @@ struct CPUID {
     int edx;
 };
 
+struct __cpuid_params_t {
+    unsigned __int64 rax;
+    unsigned __int64 rbx;
+    unsigned __int64 rcx;
+    unsigned __int64 rdx;
+};
+
 struct __vmcs_t
 {
     union
@@ -30,7 +37,27 @@ struct __vmcs_t
 struct __vmm_stack_t;
 struct __vcpu_t;
 
-
+struct __guest_registers_t
+{
+    __rflags_t rflags;
+    __m128 xmm[6];
+    void* padding;
+    unsigned __int64 r15;
+    unsigned __int64 r14;
+    unsigned __int64 r13;
+    unsigned __int64 r12;
+    unsigned __int64 r11;
+    unsigned __int64 r10;
+    unsigned __int64 r9;
+    unsigned __int64 r8;
+    unsigned __int64 rdi;
+    unsigned __int64 rsi;
+    unsigned __int64 rbp;
+    unsigned __int64 rbx;
+    unsigned __int64 rdx;
+    unsigned __int64 rcx;
+    unsigned __int64 rax;
+};
 
 
 struct __vmm_context_t
@@ -38,14 +65,14 @@ struct __vmm_context_t
     size_t ProcessorCount;
     __declspec(align(4096)) struct __vcpu_t** vcpu_table;
     __declspec(align(4096)) void* msr_bitmap;
-    unsigned __int64 __msr_bitmap_physical;
+    unsigned __int64 msr_bitmap_physical;
     void* stack;
     size_t stack_size;
+    struct __guest_registers_t guest_registers;
 };
 
 struct __vcpu_t
 {
-
     struct vmexit_status_t* status;
     unsigned __int64 guest_rsp;
     unsigned __int64 guest_rip;
@@ -61,9 +88,10 @@ struct __vcpu_t
 
 struct __vmm_stack_t
 {
-    unsigned char limit[VMM_STACK_SIZE - sizeof(struct __vmm_context_t)];
+    unsigned char stackLimit[VMM_STACK_SIZE - sizeof(struct __vmm_context_t)];
     struct __vmm_context_t vmm_context;
 };
 
+#define GUEST_STACK_SIZE  (16 * 1024)
 
 

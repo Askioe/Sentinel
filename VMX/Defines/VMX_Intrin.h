@@ -13,6 +13,10 @@ extern "C" unsigned short __read_fs(void);
 extern "C" unsigned short __read_gs(void);
 extern "C" unsigned short __load_ar(unsigned __int16 segment_selector);
 extern "C" void vmm_entrypoint(void);
+extern "C" unsigned long long __read_rip(void);
+extern "C" unsigned long long __read_rsp(void);
+
+
 
 #define SEGMENT_DESCRIPTOR_TYPE_TSS_AVAILABLE 0x9  // Available TSS (1001b)
 #define SEGMENT_DESCRIPTOR_TYPE_TSS_BUSY      0xB  // Busy TSS (1011b)
@@ -28,6 +32,10 @@ extern "C" void vmm_entrypoint(void);
 #define HOST_GDTR_BASE 0x00006C10  // VMCS field for Host GDTR Base
 #define HOST_IDTR_BASE 0x00006C12  // VMCS field for Host IDTR Base
 
+#define VMX_VMEXIT_INSTRUCTION_LENGTH 0x440C   // Field encoding for instruction length on exit
+
+#define VMX_VMENTRY_INTERRUPTION_INFO   0x00004016
+#define VMX_VMENTRY_INSTRUCTION_LENGTH  0x0000401A
 
 #pragma pack(push, 1)
 struct __pseudo_descriptor_64_t

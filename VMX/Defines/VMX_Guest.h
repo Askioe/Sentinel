@@ -31,8 +31,6 @@ enum __vmcs_width_e
 #define VMCS_ENCODE_COMPONENT_FULL_32( type, index )        VMCS_ENCODE_COMPONENT_FULL( type, doubleword, index )
 #define VMCS_ENCODE_COMPONENT_FULL_64( type, index )        VMCS_ENCODE_COMPONENT_FULL( type, quadword, index )
 
-#define VMX_VMEXIT_REASON 0x4402
-
 
 union __vmx_true_control_settings_t
 {
@@ -249,27 +247,6 @@ union __vmx_entry_control_t
     } bits;
 };
 
-
-struct __guest_registers_t
-{
-    __m128 xmm[6];
-    void* padding;
-    unsigned __int64 r15;
-    unsigned __int64 r14;
-    unsigned __int64 r13;
-    unsigned __int64 r12;
-    unsigned __int64 r11;
-    unsigned __int64 r10;
-    unsigned __int64 r9;
-    unsigned __int64 r8;
-    unsigned __int64 rdi;
-    unsigned __int64 rsi;
-    unsigned __int64 rbp;
-    unsigned __int64 rbx;
-    unsigned __int64 rdx;
-    unsigned __int64 rcx;
-    unsigned __int64 rax;
-};
 struct __vmexit_stack_t
 {
     struct __guest_registers_t guest_registers;
@@ -298,6 +275,7 @@ struct __vmexit_guest_registers_t
 
 struct vmexit_status_t
 {
+
     union __vmx_exit_reason_field_t exit_reason;     // VM exit reason (already defined)
     unsigned __int64 exit_qualification;            // Additional information on the exit reason (specific to certain exits)
     unsigned __int64 guest_rip;                     // Guest instruction pointer at the time of the VM exit
@@ -327,6 +305,12 @@ struct __gcpu_context_t
     struct __ext_registers_t ext_registers;
     struct __guest_registers_t guest_registers;
 };
+
+typedef enum {
+    VMEXIT_UNHANDLED = 0,
+    VMEXIT_HANDLED,
+} vmexit_status_code;
+
 
 enum __vmexit_reason_e
 {
@@ -410,145 +394,16 @@ enum __vmexit_reason_e
 // VM-Entry Controls
 #define VMX_VMENTRY_CONTROLS                        0x4012
 
+#define VMX_VMEXIT_REASON 0x4402
 
-/*
-Yoinked this structure from:
-https://github.com/jonomango/hv/blob/main/hv/guest-context.h
-Credits to jonomango!
-*/
+#define VMX_VMENTRY_EXCEPTION_ERROR_CODE 0x4018
 
-struct alignas(16) guest_context {
-    union {
-        uint64_t gpr[16];
+#define QUERY_CPUID_BIT(x, b)        ((x) & (1 << b))
+#define SET_CPUID_BIT(x, b)            ((x) | (1 << b))
+#define CLR_CPUID_BIT(x, b)            ((x) & ~(1 << b))
+#define CPUID_HYPERVISOR_LEAF 0x40000000
 
-        // aliases for general-purpose registers
-        struct {
-            union {
-                uint64_t rax;
-                uint32_t eax;
-                uint16_t ax;
-                uint8_t  al;
-            };
-            union {
-                uint64_t rcx;
-                uint32_t ecx;
-                uint16_t cx;
-                uint8_t  cl;
-            };
-            union {
-                uint64_t rdx;
-                uint32_t edx;
-                uint16_t dx;
-                uint8_t  dl;
-            };
-            union {
-                uint64_t rbx;
-                uint32_t ebx;
-                uint16_t bx;
-                uint8_t  bl;
-            };
-
-            // this is where RSP would be if it wasn't saved in the vmcs
-            uint64_t _padding;
-
-            union {
-                uint64_t rbp;
-                uint32_t ebp;
-                uint16_t bp;
-                uint8_t  bpl;
-            };
-            union {
-                uint64_t rsi;
-                uint32_t esi;
-                uint16_t si;
-                uint8_t  sil;
-            };
-            union {
-                uint64_t rdi;
-                uint32_t edi;
-                uint16_t di;
-                uint8_t  dil;
-            };
-            union {
-                uint64_t r8;
-                uint32_t r8d;
-                uint16_t r8w;
-                uint8_t  r8b;
-            };
-            union {
-                uint64_t r9;
-                uint32_t r9d;
-                uint16_t r9w;
-                uint8_t  r9b;
-            };
-            union {
-                uint64_t r10;
-                uint32_t r10d;
-                uint16_t r10w;
-                uint8_t  r10b;
-            };
-            union {
-                uint64_t r11;
-                uint32_t r11d;
-                uint16_t r11w;
-                uint8_t  r11b;
-            };
-            union {
-                uint64_t r12;
-                uint32_t r12d;
-                uint16_t r12w;
-                uint8_t  r12b;
-            };
-            union {
-                uint64_t r13;
-                uint32_t r13d;
-                uint16_t r13w;
-                uint8_t  r13b;
-            };
-            union {
-                uint64_t r14;
-                uint32_t r14d;
-                uint16_t r14w;
-                uint8_t  r14b;
-            };
-            union {
-                uint64_t r15;
-                uint32_t r15d;
-                uint16_t r15w;
-                uint8_t  r15b;
-            };
-        };
-    };
-
-    // control registers
-    uint64_t cr2;
-    uint64_t cr8;
-
-    // debug registers
-    uint64_t dr0;
-    uint64_t dr1;
-    uint64_t dr2;
-    uint64_t dr3;
-    uint64_t dr6;
-
-    // SSE registers
-    M128A xmm0;
-    M128A xmm1;
-    M128A xmm2;
-    M128A xmm3;
-    M128A xmm4;
-    M128A xmm5;
-    M128A xmm6;
-    M128A xmm7;
-    M128A xmm8;
-    M128A xmm9;
-    M128A xmm10;
-    M128A xmm11;
-    M128A xmm12;
-    M128A xmm13;
-    M128A xmm14;
-    M128A xmm15;
-};
-
-// remember to update this value in vm-exit.asm
-static_assert(sizeof(guest_context) == 0x1C0, "guest_context size must be 0x1C0");
+#define VMX_GUEST_RIP 0x0000681E
+#define VMX_GUEST_RSP 0x0000681C
+#define VMX_HOST_RIP  0x00006C16
+#define VMX_HOST_RSP  0x00006C14

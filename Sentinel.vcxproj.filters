@@ -28,7 +28,7 @@
     <ClCompile Include="VMX\Vmcs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VMX\vmexit.cpp">
+    <ClCompile Include="VMX\Handlers\VmExitHandlers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -66,8 +66,11 @@
     <ClInclude Include="VMX\Defines\VMX_Intrin.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="VMX\vmexit.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="VMX\Handlers\VmExitHandlers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VMX\Defines\VMX_VmExitInterrupt.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

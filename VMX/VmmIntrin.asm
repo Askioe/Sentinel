@@ -1,6 +1,6 @@
 .code
 
-; extern vmexit_handler : proc
+extern vmexit_handler : proc
 
 SAVE_GP macro
         push    rax
@@ -48,7 +48,8 @@ PUBLIC __read_fs
 PUBLIC __read_gs
 PUBLIC __load_ar
 PUBLIC vmm_entrypoint
-
+PUBLIC __read_rip
+PUBLIC __read_rsp
 
 __read_rip proc
     mov rax, [rsp]
@@ -122,7 +123,7 @@ vmm_entrypoint proc
 
         mov     rcx, rsp
         sub     rsp, 20h
-        ; call    vmexit_handler
+        call    vmexit_handler
         add     rsp, 20h
 
         movaps  xmm0, xmmword ptr [rsp +  0h]

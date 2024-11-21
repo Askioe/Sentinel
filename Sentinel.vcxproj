@@ -90,7 +90,7 @@
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
     </ClCompile>
     <Link>
-      <EntryPointSymbol>DriverEntry</EntryPointSymbol>
+      <EntryPointSymbol>Entry</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -114,10 +114,11 @@
   <ItemGroup>
     <ClCompile Include="driver.cpp" />
     <ClInclude Include="VMX\Defines\VMX_Intrin.h" />
+    <ClCompile Include="VMX\Handlers\VmExitHandlers.cpp" />
     <ClCompile Include="VMX\Vmcs.cpp" />
-    <ClCompile Include="VMX\vmexit.cpp" />
     <ClCompile Include="VMX\Vmx.cpp" />
-    <ClInclude Include="VMX\vmexit.h" />
+    <ClInclude Include="VMX\Defines\VMX_VmExitInterrupt.h" />
+    <ClInclude Include="VMX\Handlers\VmExitHandlers.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h" />

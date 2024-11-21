@@ -80,8 +80,8 @@ struct __vmm_context_t* allocate_vmm_context() {
 }
 
 // Initialize and Allocate vCPU
-struct __vcpu_t* init_vcpu() {
-    struct __vcpu_t* vcpu = NULL;
+struct __vcpu_t *init_vcpu() {
+    struct __vcpu_t *vcpu = NULL;
 
     vcpu = (struct __vcpu_t*)ExAllocatePoolWithTag(NonPagedPool, sizeof(struct __vcpu_t), POOLTAG);
     if (!vcpu) {
@@ -104,7 +104,7 @@ struct __vcpu_t* init_vcpu() {
     // Allocate and set up the MSR bitmap
     vcpu->vmm_stack->vmm_context.msr_bitmap = ExAllocatePoolWithTag(NonPagedPool, PAGE_SIZE, POOLTAG);
     RtlSecureZeroMemory(vcpu->vmm_stack->vmm_context.msr_bitmap, PAGE_SIZE);
-    vcpu->vmm_stack->vmm_context.__msr_bitmap_physical = MmGetPhysicalAddress(vcpu->vmm_stack->vmm_context.msr_bitmap).QuadPart;
+    vcpu->vmm_stack->vmm_context.msr_bitmap_physical = MmGetPhysicalAddress(vcpu->vmm_stack->vmm_context.msr_bitmap).QuadPart;
 
     log_debug("vcpu entry allocated successfully at %llX", vcpu);
     return vcpu;
@@ -233,12 +233,19 @@ void init_logical_processor(struct __vmm_context_t* context, void* guest_rsp) {
     else {
         log_debug("Successfully launched guest!");
     }
+    size_t guest_rip, Guest_rsp, host_rip, host_rsp;
+    __vmx_vmread(VMX_GUEST_RIP, &guest_rip);
+    __vmx_vmread(VMX_GUEST_RSP, &Guest_rsp);
+    __vmx_vmread(VMX_HOST_RIP, &host_rip);
+    __vmx_vmread(VMX_HOST_RSP, &host_rsp);
+
+    log_debug("Guest RIP: %lx, Guest RSP: %lx, Host RIP: %lx, Host RSP: %lx\n", guest_rip, Guest_rsp, host_rip, host_rsp);
 }
 
 // Initialize VMM
-int VMX::vmm_init() {
+void VMX::vmm_init(PVOID) {
     struct __vmm_context_t* vmm_context = allocate_vmm_context();
-    if (!vmm_context) return FALSE;
+    if (!vmm_context) return;
 
     PROCESSOR_NUMBER processor_number;
     GROUP_AFFINITY affinity, old_affinity;
@@ -249,7 +256,7 @@ int VMX::vmm_init() {
         if (!vmm_context->vcpu_table[i]) {
             log_error("Failed to initialize vCPU %d.", i);
             free_vmm_context(vmm_context);
-            return FALSE;
+            return;
         }
         vmm_context->vcpu_table[i]->vmm_stack->vmm_context = *vmm_context;
     }
@@ -265,6 +272,4 @@ int VMX::vmm_init() {
 
         KeRevertToUserGroupAffinityThread(&old_affinity);
     }
-
-    return TRUE;
 }

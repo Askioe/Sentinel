@@ -1,5 +1,12 @@
 #pragma once
 
+#define MSR_MASK_LOW ((unsigned __int64)(unsigned __int32) - 1)
+#define RESERVED_MSR_RANGE_LOW 0x40000000
+#define RESERVED_MSR_RANGE_HI  0x400000FF
+#define MSR_READ TRUE
+#define MSR_WRITE FALSE
+
+
 union __ia32_feature_control_msr_t
 {
     unsigned __int64 control;

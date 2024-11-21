@@ -117,31 +117,14 @@ static unsigned __int64 get_segment_base(unsigned __int64 gdt_base, unsigned __i
     return segment_base;
 }
 
-void write_guest() {
-    __vmx_vmwrite(GUEST_CR0, __readcr0());
-    __vmx_vmwrite(GUEST_CR3, __readcr3());
-    __vmx_vmwrite(GUEST_CR4, __readcr4());
-
-    __vmx_vmwrite(GUEST_DR7, __readdr(7));
-
-    __vmx_vmwrite(GUEST_RSP, 0);
-    __vmx_vmwrite(GUEST_RIP, 0);
-
-    __vmx_vmwrite(GUEST_RFLAGS, __readeflags());
-    __vmx_vmwrite(GUEST_DEBUG_CONTROL, __readmsr(MSR_IA32_DEBUGCTL));
-    __vmx_vmwrite(GUEST_SYSENTER_ESP, __readmsr(MSR_IA32_SYSENTER_ESP));
-    __vmx_vmwrite(GUEST_SYSENTER_EIP, __readmsr(MSR_IA32_SYSENTER_EIP));
-    __vmx_vmwrite(GUEST_SYSENTER_CS, __readmsr(MSR_IA32_SYSENTER_CS));
-    __vmx_vmwrite(GUEST_VMCS_LINK_POINTER, MAXUINT64);
-    __vmx_vmwrite(GUEST_FS_BASE, __readmsr(MSR_IA32_FS_BASE));
-    __vmx_vmwrite(GUEST_GS_BASE, __readmsr(MSR_IA32_GS_BASE));
-}
 
 // Initialize all VMCS guest states, base, etc...
 int init_vmcs(struct __vcpu_t* vcpu, struct __vmm_context_t* vmm_context) {
     struct __vmcs_t* vmcs;
     union __vmx_basic_msr_t vmx_basic = { 0 };
     PHYSICAL_ADDRESS physical_max;
+    unsigned __int64 vmm_stack = (unsigned __int64)&vcpu->vmm_stack->vmm_context;
+
 
     vmx_basic.control = __readmsr(MSR_IA32_VMX_BASIC);
 
@@ -157,7 +140,27 @@ int init_vmcs(struct __vcpu_t* vcpu, struct __vmm_context_t* vmm_context) {
         log_debug("Failed to clear vmcs_physical");
         return FALSE;
     }
-    write_guest();
+
+    __vmx_vmwrite(GUEST_CR0, __readcr0());
+    __vmx_vmwrite(GUEST_CR3, __readcr3());
+    __vmx_vmwrite(GUEST_CR4, __readcr4());
+
+    __vmx_vmwrite(GUEST_DR7, __readdr(7));
+
+    uintptr_t guest_stack_top = (uintptr_t)&vcpu->vmm_stack->stackLimit[0] + sizeof(vcpu->vmm_stack->stackLimit);
+
+
+    __vmx_vmwrite(GUEST_RSP, guest_stack_top);
+    __vmx_vmwrite(GUEST_RIP, 0);
+
+    __vmx_vmwrite(GUEST_RFLAGS, __readeflags());
+    __vmx_vmwrite(GUEST_DEBUG_CONTROL, __readmsr(MSR_IA32_DEBUGCTL));
+    __vmx_vmwrite(GUEST_SYSENTER_ESP, __readmsr(MSR_IA32_SYSENTER_ESP));
+    __vmx_vmwrite(GUEST_SYSENTER_EIP, __readmsr(MSR_IA32_SYSENTER_EIP));
+    __vmx_vmwrite(GUEST_SYSENTER_CS, __readmsr(MSR_IA32_SYSENTER_CS));
+    __vmx_vmwrite(GUEST_VMCS_LINK_POINTER, MAXUINT64);
+    __vmx_vmwrite(GUEST_FS_BASE, __readmsr(MSR_IA32_FS_BASE));
+    __vmx_vmwrite(GUEST_GS_BASE, __readmsr(MSR_IA32_GS_BASE));
 
 
     __vmx_vmwrite(CR0_READ_SHADOW, __readcr0());
@@ -254,10 +257,18 @@ int init_vmcs(struct __vcpu_t* vcpu, struct __vmm_context_t* vmm_context) {
     __vmx_vmwrite(HOST_GDTR_BASE, gdtr.base_address);
     __vmx_vmwrite(HOST_IDTR_BASE, idtr.base_address);
 
-    unsigned __int64 vmm_stack = (unsigned __int64)&vcpu->vmm_stack->vmm_context;
+    UINT64 status;
+    status = __vmx_vmwrite(HOST_RIP, (UINT64)vmm_entrypoint);
+    if (status != 0) {
+        log_error("VMWRITE for HOST_RIP failed with status: %llu", status);
+        return FALSE;
+    }
 
-    __vmx_vmwrite(HOST_RIP, (UINT64)vmm_entrypoint);
-    __vmx_vmwrite(HOST_RSP, vmm_stack);
+    status = __vmx_vmwrite(HOST_RSP, (size_t)vmm_stack);
+    if (status != 0) {
+        log_error("VMWRITE for HOST_RSP failed with status: %llu", status);
+        return FALSE;
+    }
 
     vcpu->vmm_stack->vmm_context.msr_bitmap = vmm_context->msr_bitmap;
     vcpu->vmm_stack->vmm_context.ProcessorCount = vmm_context->ProcessorCount;

@@ -1,16 +1,6 @@
 #include "globals.h"
 
-auto driver_unload(PDRIVER_OBJECT DriverObject) -> void {
-
-	log_debug("Driver unload called.");
-	VMX::disable_vmx();
-	log_debug("Disabled VMX");
-
-}
-
-NTSTATUS DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING Registry_Path) {
-	UNREFERENCED_PARAMETER(Registry_Path);
-
+NTSTATUS Entry() {
 
 	log_debug("Initializing Driver");
 
@@ -20,11 +10,9 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING Registry_Path)
 	}
 	log_debug("VMX supported!");
 
-	VMX::vmm_init();
-
-
-	DriverObject->DriverUnload = &driver_unload;
-
+	HANDLE threadHandle;
+	const NTSTATUS status = PsCreateSystemThread(&threadHandle, THREAD_ALL_ACCESS, nullptr, nullptr, nullptr, VMX::vmm_init, nullptr);
+	
 	return STATUS_SUCCESS;
 }
 
